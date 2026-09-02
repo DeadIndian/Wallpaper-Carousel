@@ -1,0 +1,77 @@
+Paste these fields into the store.kde.org upload form. Nothing here is uploaded
+for you: the store needs an opendesktop.org account and a manual submission.
+
+--- TITLE (keep it short; this is what shows in Discover / Get New Wallpaper Plugins) ---
+Carousel Slideshow
+
+--- SUMMARY (one line, no marketing) ---
+Slideshow wallpaper whose current image can be set remotely by Wallpaper Carousel
+
+--- CATEGORY ---
+Plasma Wallpaper Plugins
+
+--- TAGS ---
+plasma6, wallpaper, slideshow, multi-monitor, carousel
+
+--- LICENSE ---
+GPL-2.0-or-later
+
+--- VERSION ---
+0.1.0
+
+--- DESCRIPTION (the store accepts basic markup; plain text is safest) ---
+KDE's built-in slideshow wallpaper, with one addition: an external tool can write
+the "Image" config key to jump the slideshow to a specific picture, and the
+rotation timer keeps running from there.
+
+It also records the slide it is currently showing, and which monitor it is on, so
+another program can read back what is on screen right now instead of guessing.
+
+Everything else behaves exactly like the stock Plasma slideshow: the same folder
+list, ordering modes, fill modes, blur and solid-colour backgrounds, dynamic
+day/night wallpapers, and the same Next Image action on the desktop context menu.
+
+What it does
+- Drop-in replacement for the stock Plasma slideshow wallpaper.
+- Accepts an externally written image, mid-rotation, without a restart.
+- Publishes the slide currently shown and the screen it is on, per desktop.
+- Keeps the stock configuration UI, so nothing you already know changes.
+
+For the best experience, install the Wallpaper Carousel app
+This wallpaper is the receiving half of a pair. On its own it is the stock
+slideshow. Install the app and you get a keyboard-driven carousel of thumbnails,
+bound to a shortcut, that sets any image on any monitor and animates the reveal:
+
+    https://github.com/DeadIndian/Wallpaper-Carousel
+
+Fedora users can install both halves at once from COPR (see the README).
+
+Requirements
+- KDE Plasma 6 (tested on Plasma 6.5) with plasma-workspace installed.
+- Nothing to compile. The wallpaper itself is pure QML.
+- The Wallpaper Carousel app is optional, and needs a separate build or the COPR
+  package.
+
+Install
+- Right click the desktop, Configure Desktop and Wallpaper, Wallpaper type,
+  Get New Plugins, then search for "Carousel Slideshow".
+- Or grab org.wallpapercarousel.slideshow-0.1.0.tar.gz from the release page and run:
+      kpackagetool6 --type Plasma/Wallpaper --install org.wallpapercarousel.slideshow-0.1.0.tar.gz
+  then pick Carousel Slideshow as the wallpaper type.
+
+Source and bug reports
+https://github.com/DeadIndian/Wallpaper-Carousel
+https://github.com/DeadIndian/Wallpaper-Carousel/issues
+
+--- FILE TO UPLOAD ---
+dist/org.wallpapercarousel.slideshow-0.1.0.tar.gz
+sha256: filled in by package.sh — see dist/org.wallpapercarousel.slideshow-0.1.0.tar.gz.sha256
+
+--- CHECKLIST BEFORE SUBMITTING ---
+[ ] Version here matches plugin/org.wallpapercarousel.slideshow/metadata.json exactly.
+[ ] At least one screenshot on default Breeze. This wallpaper fills the screen, so
+    take one light and one dark, and include the wallpaper settings page so the
+    "Carousel Slideshow" entry is visible.
+[ ] The uploaded archive is the one package.sh built, not a stale dist/ file.
+[ ] Website and BugReportUrl in metadata.json still resolve; the store links them
+    and users file bugs in the comments otherwise.

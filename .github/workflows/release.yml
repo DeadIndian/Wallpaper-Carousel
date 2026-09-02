@@ -1,0 +1,36 @@
+name: release
+# Cuts a GitHub release whenever a v* tag is pushed, carrying the wallpaper plugin
+# archive. The tag must match plugin/.../metadata.json, otherwise users get an
+# archive that disagrees with the version Plasma reports.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tag matches metadata version
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          meta="$(sed -n 's/.*"Version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
+              plugin/org.wallpapercarousel.slideshow/metadata.json | head -1)"
+          if [[ "$tag" != "$meta" ]]; then
+            echo "::error::tag $tag does not match metadata.json version $meta"
+            exit 1
+          fi
+
+      - name: Build archive
+        run: bash package.sh
+
+      - name: Upload to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --generate-notes --title "$GITHUB_REF_NAME"

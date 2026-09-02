@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=Wallpaper Carousel
+Exec=wallpaper-carousel
+Icon=preferences-desktop-wallpaper
+Comment=Small utility to pick wallpaper per-screen
+Categories=Qt;KDE;Utility;

@@ -1,0 +1,40 @@
+{
+    "KPackageStructure": "Plasma/Wallpaper",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Wallpaper Carousel"
+            }
+        ],
+        "BugReportUrl": "https://github.com/DeadIndian/Wallpaper-Carousel/issues",
+        "Category": "",
+        "Description": "Slideshow wallpaper whose current image can be set remotely by Wallpaper Carousel",
+        "Icon": "folder-image",
+        "Id": "org.wallpapercarousel.slideshow",
+        "License": "GPLv2+",
+        "MimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/svg+xml-compressed",
+            "image/bmp",
+            "image/webp",
+            "image/tiff"
+        ],
+        "Name": "Carousel Slideshow",
+        "Version": "0.1.0",
+        "Website": "https://github.com/DeadIndian/Wallpaper-Carousel"
+    },
+    "Keywords": "",
+    "MimeType": "image/jpeg;image/png;image/svg+xml;image/svg+xml-compressed;image/bmp;image/webp;image/tiff;",
+    "X-KDE-ParentApp": "org.kde.plasmashell",
+    "X-Plasma-DropMimeTypes": [
+        "image/jpeg",
+        "image/png",
+        "image/svg+xml",
+        "image/svg+xml-compressed",
+        "image/bmp",
+        "image/webp",
+        "image/tiff"
+    ]
+}

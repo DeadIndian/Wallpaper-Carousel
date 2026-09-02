@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- AppStream metadata, read by Discover when Wallpaper Carousel is installed from a
+     package (COPR/RPM). The <id> is reverse-DNS as AppStream wants, and this file's
+     name has to match it exactly; the .desktop keeps its short name because
+     kglobalshortcutsrc resolves the Meta+W service shortcut by that basename, and
+     <launchable> is what ties the two together.
+     Validate with:
+       appstreamcli validate packaging/io.github.deadindian.WallpaperCarousel.metainfo.xml -->
+<component type="desktop-application">
+  <id>io.github.deadindian.WallpaperCarousel</id>
+  <launchable type="desktop-id">wallpaper-carousel.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <!-- The app is MIT; the bundled Carousel Slideshow wallpaper is a fork of KDE's own
+       slideshow wallpaper and stays GPL-2.0-or-later. -->
+  <project_license>MIT AND GPL-2.0-or-later</project_license>
+
+  <name>Wallpaper Carousel</name>
+  <summary>Pick a wallpaper per screen from a carousel of thumbnails</summary>
+
+  <description>
+    <p>
+      A bottom-centered carousel of the images in your wallpaper folder. Arrow keys
+      move through it, Enter applies the highlighted image to the current screen, and
+      Tab hops the picker to the next monitor for when the compositor guesses wrong
+      after a hotplug.
+    </p>
+    <p>
+      Wallpapers are applied through plasmashell, so whatever you pick becomes the
+      real desktop wallpaper rather than a separate layer. A companion wallpaper
+      plugin, Carousel Slideshow, is installed alongside: select it as your wallpaper
+      type and the picker can jump the slideshow to a specific image without stopping
+      the rotation.
+    </p>
+  </description>
+
+  <categories>
+    <category>Utility</category>
+  </categories>
+
+  <url type="homepage">https://github.com/DeadIndian/Wallpaper-Carousel</url>
+  <url type="bugtracker">https://github.com/DeadIndian/Wallpaper-Carousel/issues</url>
+
+  <developer id="io.github.deadindian">
+    <name>Enzo Scafi</name>
+  </developer>
+
+  <!-- No <screenshots> yet: AppStream needs absolute HTTPS URLs that resolve, and a
+       link to a file that is not in the repo is worse than none. Add one here once a
+       screenshot is committed. -->
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="0.1.0" date="2026-09-02">
+      <description>
+        <p>
+          First packaged release. Per-screen wallpaper picking, Tab to hop the picker
+          between monitors, a configurable reveal animation, and the Carousel
+          Slideshow wallpaper plugin.
+        </p>
+      </description>
+    </release>
+  </releases>
+</component>
