@@ -204,10 +204,19 @@ void WallpaperController::enforceScreen(const QString &screenName)
     runKWinScript("wallpapercarousel-place", QStringLiteral(R"(
 const target = workspace.screens.find(s => s.name === "%1");
 for (const w of workspace.windowList()) {
-    if (w.resourceClass === "wallpaper-carousel" && target && w.output.name !== target.name) {
-        w.fullScreen = false;
-        workspace.sendClientToScreen(w, target);
-        w.fullScreen = true;
+    if (w.resourceClass === "wallpaper-carousel" && target) {
+        if (w.output.name !== target.name) {
+            w.fullScreen = false;
+            workspace.sendClientToScreen(w, target);
+            w.fullScreen = true;
+        }
+        // Window-management scripts (e.g. RememberWindowPositions) restore a
+        // stale saved geometry on top of the fullscreen state, shrinking the
+        // picker to a corner of the screen. Re-assert the full output size.
+        if (w.fullScreen && (w.frameGeometry.width !== target.geometry.width
+                || w.frameGeometry.height !== target.geometry.height)) {
+            w.frameGeometry = target.geometry;
+        }
     }
 }
 )").arg(screenName));
@@ -341,13 +350,35 @@ bool WallpaperController::setPlasmaWallpaperJavaScript(const QString &screenName
 
     QString js = QString(R"(
 const px = %1, py = %2;
-const targetDesktop = desktops().find(d => {
-    if (d.screen === -1) {
+const wantScreen = "%6";
+const isCarousel = d => d.wallpaperPlugin === "org.kde.slideshow"
+        || d.wallpaperPlugin === "org.wallpapercarousel.slideshow";
+// Plasma 6 reports d.screen === -1 for assigned outputs, so geometry matching
+// finds nothing and the wallpaper never changes. The carousel plugin stamps
+// its connector into CurrentScreen — match on that first. Geometry stays as a
+// fallback for the day d.screen works again; single-carousel as a last resort.
+let targetDesktop = desktops().find(d => {
+    if (!isCarousel(d)) {
         return false;
     }
-    const g = screenGeometry(d.screen);
-    return px >= g.left && px < g.left + g.width && py >= g.top && py < g.top + g.height;
+    d.currentConfigGroup = ["Wallpaper", d.wallpaperPlugin, "General"];
+    return d.readConfig("CurrentScreen") === wantScreen;
 });
+if (!targetDesktop) {
+    targetDesktop = desktops().find(d => {
+        if (d.screen === -1) {
+            return false;
+        }
+        const g = screenGeometry(d.screen);
+        return px >= g.left && px < g.left + g.width && py >= g.top && py < g.top + g.height;
+    });
+}
+if (!targetDesktop) {
+    const carousels = desktops().filter(isCarousel);
+    if (carousels.length === 1) {
+        targetDesktop = carousels[0];
+    }
+}
 
 if (targetDesktop) {
     if (targetDesktop.wallpaperPlugin === "org.kde.slideshow"
@@ -363,7 +394,7 @@ if (targetDesktop) {
         targetDesktop.writeConfig("%4", "file://%5");
     }
 }
-)").arg(center.x()).arg(center.y()).arg(pluginType).arg(writeKey).arg(path);
+)").arg(center.x()).arg(center.y()).arg(pluginType).arg(writeKey).arg(path).arg(screenName);
 
     qDebug() << "[setPlasmaWallpaperJavaScript] JavaScript being sent to DBus:\n" << js;
 

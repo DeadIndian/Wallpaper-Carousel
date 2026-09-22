@@ -44,7 +44,11 @@ ColumnLayout {
 
         Component.onCompleted: function () {
             if (typeof appearanceRoot !== "undefined") {
-                twinFormLayouts = appearanceRoot.parentLayout;
+                twinFormLayouts.push(appearanceRoot.parentLayout);
+            } else {
+                // Desktop "Configure Wallpaper…" dialog has no appearanceRoot;
+                // twin with config.qml's form so label columns line up.
+                twinFormLayouts.push(formLayout);
             }
         }
 

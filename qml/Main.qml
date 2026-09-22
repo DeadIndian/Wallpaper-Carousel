@@ -63,6 +63,19 @@ Window {
         onTriggered: root.close()
     }
 
+    // Deferred tail of syncToCurrentWallpaper: the animated hop to the target
+    // slide, fired once the ListView has done its initial layout.
+    Timer {
+        id: spinTimer
+        interval: 50
+        property int target: -1
+        function spinTo(t) { target = t; restart(); }
+        onTriggered: {
+            carousel.highlightMoveDuration = 6 * 100; // per-item, like arrow keys
+            carousel.currentIndex = target;
+        }
+    }
+
     function syncToCurrentWallpaper() {
         if (typeof screenHelper === "undefined" || !screenHelper) return;
         var current = controller.currentWallpaper(screenHelper.targetScreenName);
@@ -71,14 +84,20 @@ Window {
         var i = infiniteModel.indexOfFile(current);
         console.log("[sync] screen=" + screenHelper.targetScreenName + " current=" + current + " index=" + i + " count=" + n);
         if (i < 0) return;
+        var target = 100000 - (100000 % n) + i;
+        // Already in place or spinning there: sync runs twice (screen known,
+        // then placed) — don't restart the spin.
+        if (Math.abs(carousel.currentIndex - target) <= 6) return;
         // Same virtual-index trick as the 100000 default, but on the current slide.
-        // Jump instantly: the window is still transparent at this point, and an
-        // animated jump of a few thousand px was landing off-target.
+        // Teleport to a few slides before the target, then let the list spin the
+        // rest the same way the arrow keys move: animating the whole distance
+        // (tens of thousands of px) lands off-target, a short run doesn't.
+        // Index changes in the same run never animate — the view is still doing
+        // its initial layout — so the spin is deferred past that by spinTimer.
         carousel.highlightMoveDuration = 0;
-        carousel.currentIndex = 100000 - (100000 % n) + i;
+        carousel.currentIndex = target - 6;
         carousel.positionViewAtIndex(carousel.currentIndex, ListView.SnapPosition);
-        // Back to snappy per-item movement for the arrow keys.
-        carousel.highlightMoveDuration = 100;
+        spinTimer.spinTo(target);
     }
     // Target screen is known only after KWin answers, and the compositor can
     // still put us elsewhere — re-seek whenever it settles.
@@ -107,6 +126,8 @@ Window {
             + " placed=" + screenHelper.placed
             + " qtScreens=[" + names.join(" ") + "]"
             + " Screen=" + Screen.name + " " + Screen.width + "x" + Screen.height
+            + " dpr=" + Screen.devicePixelRatio
+            + " vis_state=" + visibility
             + " root=" + width + "x" + height + " vis=" + visible + " active=" + active
             + " container=" + container.width + "x" + container.height
             + " @" + Math.round(container.x) + "," + Math.round(container.y)
