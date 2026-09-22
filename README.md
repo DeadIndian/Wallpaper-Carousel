@@ -1,6 +1,45 @@
+<div align="center">
+
 # Wallpaper Carousel
 
-Small utility for KDE Plasma that shows a bottom-centered carousel of images and lets you set the wallpaper per-screen.
+### Pick a wallpaper per screen from a bottom-centered carousel of thumbnails
+
+Small utility for KDE Plasma that shows a bottom-centered carousel of images and lets you set the wallpaper per-screen — keyboard-driven, animated, and able to steer a running slideshow.
+
+[![License](https://img.shields.io/github/license/DeadIndian/Wallpaper-Carousel?style=flat-square)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/DeadIndian/Wallpaper-Carousel?style=flat-square)](https://github.com/DeadIndian/Wallpaper-Carousel/releases)
+[![Stars](https://img.shields.io/github/stars/DeadIndian/Wallpaper-Carousel?style=flat-square)](https://github.com/DeadIndian/Wallpaper-Carousel/stargazers)
+[![KDE Plasma 6](https://img.shields.io/badge/KDE%20Plasma-6-1d99f3?style=flat-square&logo=kde&logoColor=white)](https://kde.org/plasma-desktop/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+
+[Installation](#install) ·
+[Usage](#using-the-carousel-slideshow-wallpaper) ·
+[Report Bug](https://github.com/DeadIndian/Wallpaper-Carousel/issues) ·
+[Request Feature](https://github.com/DeadIndian/Wallpaper-Carousel/issues)
+
+<!-- USER: capture the picker open over a desktop and save it to assets/screenshots/hero.png -->
+<img src="assets/screenshots/hero.png" alt="Wallpaper Carousel picker" width="80%" />
+
+</div>
+
+---
+
+## Table of Contents
+
+- [What ships here](#what-ships-here)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Install](#install)
+- [Using the Carousel Slideshow wallpaper](#using-the-carousel-slideshow-wallpaper)
+- [Config](#config)
+- [Notes](#notes)
+- [Packaging](#packaging)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## What ships here
 
 Two pieces ship from this repo:
 
@@ -20,6 +59,14 @@ lets you keep a slideshow running *and* jump it to a chosen image.
 - Scans `~/{XDG_PICTURES_DIR}/Wallpapers` by default (configurable).
 - Uses plasmashell DBus `evaluateScript` to set wallpapers per screen.
 - Expanding-circle reveal animation grown out of the picked thumbnail.
+
+## Screenshots
+
+<!-- USER: capture each view and drop the files at the paths below, then commit them. -->
+
+| Picker carousel | Reveal animation |
+| :---: | :---: |
+| <img src="assets/screenshots/carousel.png" width="100%" /> | <img src="assets/screenshots/reveal.png" width="100%" /> |
 
 ## Install
 
@@ -132,6 +179,11 @@ sha256 — that archive is what goes on a GitHub release and to store.kde.org.
 source of truth; the release workflow refuses a tag that disagrees with it.
 `packaging/store-description.txt` is the store listing text.
 
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for build and test
+steps, and the [Code of Conduct](CODE_OF_CONDUCT.md) before opening a PR.
+
 ## License
 
 Two licenses, by directory — they are not interchangeable, so keep the split when you
@@ -142,3 +194,5 @@ copy code around:
   KDE's own `org.kde.slideshow` wallpaper from plasma-workspace, and keeps its
   copyright headers and license. See
   [`plugin/org.wallpapercarousel.slideshow/LICENSE`](plugin/org.wallpapercarousel.slideshow/LICENSE).
+</content>
+</invoke>

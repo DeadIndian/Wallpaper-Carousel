@@ -104,3 +104,8 @@ foreach(test_target wc-tests wc-tests-screenorder)
     target_compile_options(${test_target} PRIVATE -UNDEBUG)
 endforeach()
 
+# Register both self-checks so `ctest` runs them; they still work as bare binaries.
+enable_testing()
+add_test(NAME wc-tests COMMAND wc-tests)
+add_test(NAME wc-tests-screenorder COMMAND wc-tests-screenorder)
+

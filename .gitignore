@@ -44,5 +44,5 @@ build/
 # package.sh output — release artifacts, rebuilt on demand, never committed
 dist/
 
-# Claude Code local settings (machine-specific, may hold local paths)
-.claude/settings.local.json
+# Editor/agent local settings (machine-specific, may hold local paths)
+.claude/

@@ -97,6 +97,6 @@ appstreamcli validate --no-net \
 %{_datadir}/plasma/wallpapers/org.wallpapercarousel.slideshow/
 
 %changelog
-* Wed Sep 02 2026 Enzo Scafi <noreply@github.com> - 0.1.0-1
+* Wed Sep 02 2026 DeadIndian <gollabharath2007@gmail.com> - 0.1.0-1
 - First packaged release: per-screen picker, Tab screen-hop, reveal animation,
   and the Carousel Slideshow wallpaper plugin.
